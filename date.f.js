@@ -1,299 +1,241 @@
 /*!
- * "f" is for Format & WHAT THE diff?? v0.5.0
+ * F is for Format, WHAT'S THE diff??, & Friends v1.2
  *
- * Copyright (c) 2009 Joshua Faulkenberry
- * Dual licensed under the MIT and GPL licenses.
- * http://docs.jquery.com/License
+ * Kopimi 2021 Joshua Faulkenberry
+ * Unlicensed under The Unlicense
+ * http://unlicense.org/
  *
- * Date: 2009-03-20 22:15:23 -0700 (Fri, 20 Mar 2009)
- * Revision: 6
+ * $Date: 2020-12-03 11:48:35 -0800 (Thu, 03 Dec 2020) $
+ * $Revision: 771 $
  */
-
-/************** "f" is for Format ***************
+/************** F is for Format ***************
  * Outputs a JavaScript Date Object in various
  * customizable formats
  **********************************************
  */
+/*global window*/
 window.Date.prototype.f = function(format) {
+   if(this === "" || this == "NaN") {
+      return "Invalid Date";
+   }
    if(format == "@") {
       return this.getTime();
    }
    else if(format == "REL") {
-   	var diff = (((new Date()).getTime() - this.getTime()) / 1000), day_diff = Math.floor(diff / 86400);
-   	return day_diff == 0 && (
- 			diff > -60 && "right now" ||
-			diff > -120 && "1 minute from now" ||
-			diff > -3600 && -(Math.floor(diff / 60)) + " minutes from now" ||
-			diff > -7200 && "1 hour ago" ||
-			diff > -86400 && -(Math.floor(diff / 3600)) + " hours from now" ||
+      var diff = (((new Date()).getTime() - this.getTime()) / 1000), day_diff = Math.floor(diff / 86400);
+      return day_diff === 0 && (
+          diff > -60 && "right now" ||
+         diff > -120 && "1 minute from now" ||
+         diff > -3600 && -(Math.floor(diff / 60)) + " minutes from now" ||
+         diff > -7200 && "1 hour ago" ||
+         diff > -86400 && -(Math.floor(diff / 3600)) + " hours from now" ||
 
-			diff < 60 && "just now" ||
-			diff < 120 && "1 minute ago" ||
-			diff < 3600 && Math.floor( diff / 60 ) + " minutes ago" ||
-			diff < 7200 && "1 hour ago" ||
-			diff < 86400 && Math.floor( diff / 3600 ) + " hours ago") ||
+         diff < 60 && "just now" ||
+         diff < 120 && "1 minute ago" ||
+         diff < 3600 && Math.floor( diff / 60 ) + " minutes ago" ||
+         diff < 7200 && "1 hour ago" ||
+         diff < 86400 && Math.floor( diff / 3600 ) + " hours ago") ||
 
-			day_diff == 0 && "Tomorrow" ||
-			day_diff > -7 && -(day_diff) + " days from now" ||
-			-(Math.ceil( day_diff / 7 )) == 1 && "1 week from now" ||
-			day_diff > -78 && -(Math.ceil( day_diff / 7 )) + " weeks from now" ||
-			day_diff > -730 && -(Math.ceil( day_diff / 30 )) + " months from now" ||
-			day_diff <= -730 && -(Math.ceil( day_diff / 365 )) + " years from now" ||
-	
-			day_diff == 1 && "Yesterday" ||
-			day_diff < 7 && day_diff + " days ago" ||
-			(Math.ceil( day_diff / 7 )) == 1 && "1 week ago" ||
-			day_diff < 78 && Math.ceil( day_diff / 7 ) + " weeks ago" ||
-			day_diff < 730 && Math.ceil( day_diff / 30 ) + " months ago" ||
-			Math.ceil( day_diff / 365 ) + " years ago";
+         day_diff === 0 && "Tomorrow" ||
+         day_diff > -7 && -(day_diff) + " days from now" ||
+         -(Math.ceil( day_diff / 7 )) == 1 && "1 week from now" ||
+         day_diff > -78 && -(Math.ceil( day_diff / 7 )) + " weeks from now" ||
+         day_diff > -730 && -(Math.ceil( day_diff / 30 )) + " months from now" ||
+         day_diff <= -730 && -(Math.ceil( day_diff / 365 )) + " years from now" ||
+
+         day_diff == 1 && "Yesterday" ||
+         day_diff < 7 && day_diff + " days ago" ||
+         (Math.ceil( day_diff / 7 )) == 1 && "1 week ago" ||
+         day_diff < 78 && Math.ceil( day_diff / 7 ) + " weeks ago" ||
+         day_diff < 730 && Math.ceil( day_diff / 30 ) + " months ago" ||
+         Math.ceil( day_diff / 365 ) + " years ago";
    }
-   var MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'],
-       DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-       LZ = function(x) {return(x<0||x>9?"":"0")+x},
+   var MONTH_NAMES=['January','February','March','April','May','June','July','August','September','October','November','December'],
+       DAY_NAMES=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
        date = this,
-	    format = format + "",
-	    result = "",
-	    i_format = 0,
-	    c = "",
-	    token = "",
-	    y = date.getYear() + "",
-	    M = date.getMonth() + 1,
-	    d = date.getDate(),
-	    E = date.getDay(),
-	    H = date.getHours(),
-	    m = date.getMinutes(),
-	    s = date.getSeconds(),   
-	    yyyy,yy,MMM,MM,dd,hh,h,mm,ss,ampm,HH,H,KK,K,kk,k,
-	    value = new Object();
-	// Convert real date parts into formatted versions
-	if (y.length < 4) {y=""+(y-0+1900);}
-	value["y"]=""+y;
-	value["yyyy"]=y;
-	value["yy"]=y.substr(2,4);
-	value["M"]=M;
-	value["MM"]=LZ(M);
-	value["MMM"]=MONTH_NAMES[M-1];
-	value["NNN"]=MONTH_NAMES[M-1].substr(0,3);
-	value["N"]=MONTH_NAMES[M-1].substr(0,1);
-	value["d"]=d;
-	value["dd"]=LZ(d);
-	value["e"]=DAY_NAMES[E].substr(0,1);
-	value["ee"]=DAY_NAMES[E].substr(0,2);
-	value["E"]=DAY_NAMES[E].substr(0,3);
-	value["EE"]=DAY_NAMES[E];
-	value["H"]=H;
-	value["HH"]=LZ(H);
-	if (H==0){value["h"]=12;}
-	else if (H>12){value["h"]=H-12;}
-	else {value["h"]=H;}
-	value["hh"]=LZ(value["h"]);
-	if (H>11){value["K"]=H-12;} else {value["K"]=H;}
-	value["k"]=H+1;
-	value["KK"]=LZ(value["K"]);
-	value["kk"]=LZ(value["k"]);
-	if (H > 11) { value["a"]="PM"; }
-	else { value["a"]="AM"; }
-	value["m"]=m;
-	value["mm"]=LZ(m);
-	value["s"]=s;
-	value["ss"]=LZ(s);
-	while (i_format < format.length) {
-		c=format.charAt(i_format);
-		token="";
-		while ((format.charAt(i_format)==c) && (i_format < format.length)) {
-			token += format.charAt(i_format++);
-			}
-		if (value[token] != null) { result=result + value[token]; }
-		else { result=result + token; }
-	}
-	return result;
-}
+       result="",
+       i_format=0,
+       c="",
+       token="",
+       y=date.getYear()+"",
+       M=date.getMonth()+1,
+       d=date.getDate(),
+       E=date.getDay(),
+       D=date.getDay(),
+       H=date.getHours(),
+       m=date.getMinutes(),
+       s=date.getSeconds(),
+       n=date.getMilliseconds(),
+       yyyy,yy,MMM,MM,dd,hh,h,mm,ss,nn,ampm,HH,KK,K,kk,k,
+       LZ = function(x) {
+           return(x<0||x>9?"":"0")+x;
+       },
+       midnight = (new Date());
+       if(!MONTH_NAMES[M-1]) return "Invalid Date";
+   format=format+"";
+   midnight.setHours(0);
+   midnight.setMinutes(0);
+   midnight.setSeconds(0);
+   midnight.setMilliseconds(0);
+   if (y.length < 4) {
+      y=""+(y-0+1900);
+   }
+   var value = {
+      y: ""+y,
+      yyyy: y,
+      yy: (y+"").substr(2,4),
+      M: M,
+      MM: LZ(M),
+      MMM: MONTH_NAMES[M-1],
+      NNN: MONTH_NAMES[M-1].substr(0,3),
+      N: MONTH_NAMES[M-1].substr(0,1),
+      d: d,
+      dd: LZ(d),
+      e: DAY_NAMES[E].substr(0,1),
+      ee: DAY_NAMES[E].substr(0,2),
+      E: DAY_NAMES[E].substr(0,3),
+      EE: DAY_NAMES[E],
+      D: (date.getTime() >= midnight.getTime() && date.getTime() < (midnight.getTime() + (1000*60*60*24))) ? "Today" : DAY_NAMES[D].substr(0,3),
+      DD: (date.getTime() >= midnight.getTime() && date.getTime() < (midnight.getTime() + (1000*60*60*24))) ? "Today" : DAY_NAMES[D],
+      H: H,
+      HH: LZ(H),
+      h: (H===0) ? 12 : (H>12) ? H-12 : H,
+      hh: LZ((H===0) ? 12 : (H>12) ? H-12 : H),
+      k: H+1,
+      kk: LZ(H+1),
+      K: (H>11) ? H-12 : H,
+      KK: LZ((H>11) ? H-12 : H),
+      m: m,
+      mm: LZ(m),
+      s: s,
+      ss: LZ(s),
+      n: n,
+      a: (H>11) ? "PM" : "AM",
+   };
+   while (i_format < format.length) {
+      c=format.charAt(i_format);
+      token="";
+      while ((format.charAt(i_format)==c) && (i_format < format.length)) {
+         token += format.charAt(i_format++);
+      }
+      if (value[token] != null) { result=result + value[token]; }
+      else { result=result + token; }
+   }
+   return result;
+};
 
-/************* WHAT THE diff?? *************
+/************ WHAT'S THE diff?? *************
  * Calculates the exact difference between
  * any two dates and outputs the results in
  * a customizable incremental breakdown
- *******************************************
+ ********************************************
  */
-window.Date.prototype.diff = function(date, breakdown) {
-   var options = {};
-   if( typeof date ==  "string" ) {
+window.Date.prototype.diff = function(date, options) {
+   if(typeof(date) == "undefined") date = new Date();
+   else if(typeof(date) ==  "string" || typeof(date) ==  "number") {
       if((new Date(date)) != "Invalid Date" && (new Date(date)) != "NaN") {
          date = new Date(date);
       }
       else {
-         breakdown = date;
-         date = new Date();
+         console.log("Invalid diff comparison date: " + date);
+         return false;
       }
    }
-   else if( typeof date ==  "object" && !date.getTime) {
+   else if(typeof(date) ==  "object" && !date.getTime) {
       options = date;
       date = new Date();
    }
-   if( typeof breakdown ==  "object") {
-      options = breakdown;
-      breakdown = options.breakdown || "*";
+   if(typeof(options) ==  "string") {
+      options = {
+         breakdown: options
+      };
    }
-	options.labels = options.labels || {};
-   if(breakdown) {
-      function processTime(trg) {
-         var result = null;
-         if(diff >= tl[trg]) {
-            if(trg == "Y" || trg == "D" || trg == "C" || trg == "T") {
-               //Catch leap years
-               for(var yr = (min);yr.getFullYear() <= max.getFullYear();yr.setYear(yr.getFullYear()+1)) {
-                  if(yr.isLeapYear()) {
-                     diff -= tl["d"];
-                  }
-               }
-            }
-            if(diff >= tl[trg]) {
-               result = Math.floor(diff/tl[trg]) + " " + (Math.floor(diff/tl[trg]) == 1 && names[trg][0] || names[trg][1]);
-               diff = diff%tl[trg];
-            }
-         }
-         eval('breakdown = breakdown.replace(/'+trg+'/g, "")');
-         return result;
+   if(!options) options = {};
+   options = {
+      breakdown: options.breakdown || "TCDYMWdHmSN",
+      divider:   options.divider || ", ",
+      abbr:      options.abbr || false,
+      same:      options.same || "Same",
+      zeros:     options.zeros || false,
+      labels:    options.hasOwnProperty('labels') ? options.labels : {
+         T : ["Millennium","Millennia","ml"],
+         C : ["Century","Centuries","c"],
+         D : ["Decade","Decades","d"],
+         Y : ["Year","Years","yr"],
+         M : ["Month","Months","mo"],
+         W : ["Week","Weeks","wk"],
+         d : ["Day","Days","d"],
+         H : ["Hour","Hours","hr"],
+         m : ["Minute","Minutes","m"],
+         S : ["Second","Seconds","s"],
+         N : ["Millisecond","Milliseconds","ms"]
       }
+   };
+   var min   = date <= this && date || date > this && this,
+       max   = date > this && date || date <= this && this,
+       diff  = (max.getTime() - min.getTime()),
+       tl    = {
+          T : 1000*60*60*24*365*100*10,
+          C : 1000*60*60*24*365*100,
+          D : 1000*60*60*24*365*10,
+          Y : 1000*60*60*24*365,
+          M : 1000*60*60*24*30,
+          W : 1000*60*60*24*7,
+          d : 1000*60*60*24,
+          H : 1000*60*60,
+          m : 1000*60,
+          S : 1000,
+          N : 1
+       },
+       result = [];
 
-      var min   = date <= this && date || date > this && this,
-         max    = date > this && date || date <= this && this,
-         diff   = (max.getTime() - min.getTime()),
-         tl     = {
-            T : 1000*60*60*24*365*100*10,
-            C : 1000*60*60*24*365*100,
-            D : 1000*60*60*24*365*10,
-            Y : 1000*60*60*24*365,
-            M : 1000*60*60*24*28,
-            W : 1000*60*60*24*7,
-            d : 1000*60*60*24,
-            H : 1000*60*60,
-            m : 1000*60,
-            S : 1000,
-            N : 1
-         },
-         names = {
-            T : options.labels.T || ["Mellinium","Mellinia"],
-            C : options.labels.C || ["Century","Centuries"],
-            D : options.labels.D || ["Decade","Decades"],
-            Y : options.labels.Y || ["Year","Years"],
-            M : options.labels.M || ["Month","Months"],
-            W : options.labels.W || ["Week","Weeks"],
-            d : options.labels.d || ["Day","Days"],
-            H : options.labels.H || ["Hour","Hours"],
-            m : options.labels.m || ["Minute","Minutes"],
-            S : options.labels.S || ["Second","Seconds"],
-            N : options.labels.N || ["Millisecond","Milliseconds"]
-         };
-      if(options.len) {
-         for(var x in names) {
-            names[x] = names[x].substr(0,options.len);
+   for(var i = 0; i < options.breakdown.length; i++) {
+      var res = Math.floor(diff / tl[options.breakdown.charAt(i)]);
+      if(res || options.zeros) {
+         if(options.zeros && options.breakdown.charAt(i) == "N") {
+            if(res < 10) res = "00" + res;
+            else if(res < 100) res = "0" + res;
          }
+         result.push(res + (options.labels ? " " + options.labels[options.breakdown.charAt(i)][options.abbr ? 2 : res == 1 ? 0 : 1] : ""));
+         diff = diff % tl[options.breakdown.charAt(i)];
       }
+   };
 
-      //Catch daylight savings year by year
-      var testDt = new Date(min.toString());
-      if(max.getFullYear() - testDt.getFullYear() > 1) {
-         testDt.setYear(max.getFullYear()-1);
-      }
-      while(testDt < max) {
-         if(testDt.isDayLightSavingsDay() && testDt.getMonth() < 5) {
-            diff += tl["H"];
-         }
-         else if(testDt.isDayLightSavingsDay()) {
-            diff -= tl["H"];
-         }
-         testDt.setDate(testDt.getDate()+1);
-      }
-      //Catch daylight savings for when the max date is before the spring change or after the fall change
-      if(((max.getMonth() == max.getDayLightSavingsDays()[0].getMonth() && max.getDate() < max.getDayLightSavingsDays()[0].getDate()) || max.getMonth() < max.getDayLightSavingsDays()[0].getMonth()) && max.getMonth() == min.getMonth() ) {
-         diff += tl["H"];
-      }
-      else if(((min.getMonth() == min.getDayLightSavingsDays()[1].getMonth() && min.getDate() > min.getDayLightSavingsDays()[1].getDate()) || min.getMonth() < min.getDayLightSavingsDays()[1].getMonth()) && min.getMonth() == min.getMonth() ) {
-         diff -= tl["H"];
-      }
-      var result = [], out;
-      while(diff>0) {
-         if(breakdown == "*") {
-           breakdown = "TCDYMWdHmSN";
-         }
-         else if(breakdown.indexOf("T") > -1) {
-           if(out = processTime("T")) {result[result.length] = out};
-         }
-         else if(breakdown.indexOf("C") > -1) {
-           if(out = processTime("C")) {result[result.length] = out};
-         }
-         else if(breakdown.indexOf("D") > -1) {
-           if(out = processTime("D")) {result[result.length] = out};
-         }
-         else if(breakdown.indexOf("Y") > -1) {
-           if(out = processTime("Y")) {result[result.length] = out};
-         }
-         else if(breakdown.indexOf("M") > -1) {
-           if(diff >= tl["M"]) {
-              var cur = (new Date(max.getTime() - diff));
-              var monthCount = 0;
-              var lastVal = 0;
-              //Step through each year
-              for(var yr = cur.getFullYear();yr<=max.getFullYear();yr++) {
-                 //Step through each month
-                 while(cur.getFullYear() == yr) {
-                    lastVal = cur.getTime();
-                    cur.setMonth(cur.getMonth()+1);
-                    if( diff - (cur.getTime() - lastVal) >= 0 ) {
-                       monthCount++;
-                       diff -= (cur.getTime() - lastVal);
-                    }
-                    if(yr == max.getFullYear() && cur.getMonth() == max.getMonth()) {
-                       break;
-                    }
-                 }
-              }
-              if(monthCount) {
-                 result[result.length] = monthCount + " " + (monthCount == 1 && names["M"][0] || names["M"][1]);
-              }
-           }
-           breakdown = breakdown.replace(/M/g, "");
-         }
-         else if(breakdown.indexOf("W") > -1) {
-           if(out = processTime("W")) {result[result.length] = out};
-         }
-         else if(breakdown.indexOf("d") > -1) {
-           if(out = processTime("d")) {result[result.length] = out};
-         }
-         else if(breakdown.indexOf("H") > -1) {
-           if(out = processTime("H")) {result[result.length] = out};
-         }
-         else if(breakdown.indexOf("m") > -1) {
-           if(out = processTime("m")) {result[result.length] = out};
-         }
-         else if(breakdown.indexOf("S") > -1) {
-           if(out = processTime("S")) {result[result.length] = out};
-         }
-         else if(breakdown.indexOf("N") > -1) {
-           if(out = processTime("N")) {result[result.length] = out};
-         }
-         else {
-           diff = 0;
-         }
-      }
-      options.divider = options.divider || ", ";
-      if(options.divider == ", " && result.length > 1 && !options.hideAnd) {
-         result[result.length-1] = "and " + result[result.length-1];
-      }
-      diff = result.join(options.divider);
-   }
-   if(diff == "") {
-      diff = "Same";
+   diff = result.join(options.divider);
+   if(diff === "") {
+      diff = options.same;
    }
    if(options.lc) {
       diff = diff.toLowerCase();
    }
    return diff;
-}
+};
+
+/*************** Date.when() ****************
+ * Returns a fancy timestamp indicating how
+ * long ago a date was like you see on
+ * Facebook or Twitter
+ ********************************************
+ */
+window.Date.prototype.when = function() {
+   var
+      now       = new Date(),
+      ts        = this.f("MMM d, yyyy h:mm a"),
+      nowSec    = now.getTime() / 1000,
+      tsSec     = this.getTime() / 1000;
+
+   if((nowSec - tsSec) < 60) ts = "Now";
+   else if((nowSec - tsSec) / 60 < 60) ts = this.diff(now, "m");
+   else if(((nowSec - tsSec) / 60) / 60 < 12) ts = this.diff(now, "H");
+   else if(now.f("yyyyMMdd") == this.f("yyyyMMdd")) ts = "Today" + this.f("h:mm a");
+   else if(tsSec > (new Date(new Date(now.f("MM/dd/yyyy 00:00:00")).setDate(now.getDate()-1))).getTime() / 1000) ts = "Yesterday " + this.f("h:mm a");
+   else if(tsSec > (new Date(new Date(now.f("MM/dd/yyyy 00:00:00")).setDate(now.getDate() - now.getDay()))).getTime() / 1000) ts = this.f("EE h:mm a");
+   else if(tsSec > (new Date(new Date().getFullYear(), 0, 1)).getTime() / 1000) ts = this.f("MMM d h:mm a");
+   return ts;
+};
 
 /********* Date.getDaysInMonth() *************
- * Returns the number of days in the selected
+ * Returns the number of days in the current
  * month
  *********************************************
  */
@@ -302,18 +244,18 @@ window.Date.prototype.getDaysInMonth = function() {
 };
 
 /************* Date.isLeapYear() ***************
- * Returns true if the selected year is a leap
+ * Returns true if the current year is a leap
  * year
  ***********************************************
  */
 window.Date.prototype.isLeapYear = function() {
-   return (new Date(this.getFullYear(),2-1,29)).getDate() == 29;
+   return (new Date(this.getFullYear(),1,29)).getDate() == 29;
 };
 
 /******* Date.getDayLightSavingsDays() *********
  * Returns an array containing date objects for
  * the two daylight savings change days within
- * the selected year
+ * the current year
  ***********************************************
  */
 window.Date.prototype.getDayLightSavingsDays = function() {
@@ -327,8 +269,8 @@ window.Date.prototype.getDayLightSavingsDays = function() {
       day1.setDate(day1.getDate()+1);
       day2.setDate(day2.getDate()+1);
    }
-   var day1 = new Date("10/31/"+this.getFullYear());
-   var day2 = new Date("10/30/"+this.getFullYear());
+   day1 = new Date("10/31/"+this.getFullYear());
+   day2 = new Date("10/30/"+this.getFullYear());
    while(day1.getMonth() < 11 || (day1.getMonth() == 10 && day1.getDate() < 9)) {
       if((day1.getTime() - day2.getTime())/1000/60/60 != 24) {
          result[result.length] = new Date(day2.getTime());
@@ -340,7 +282,7 @@ window.Date.prototype.getDayLightSavingsDays = function() {
 };
 
 /******** Date.isDayLightSavingsDay() **********
- * Returns true if the selected day is a
+ * Returns true if the current day is a
  * daylight savings change day
  ***********************************************
  */
