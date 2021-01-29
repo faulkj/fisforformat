@@ -4,16 +4,14 @@
  * Kopimi 2021 Joshua Faulkenberry
  * Unlicensed under The Unlicense
  * http://unlicense.org/
- *
- * $Date: 2020-12-03 11:48:35 -0800 (Thu, 03 Dec 2020) $
- * $Revision: 771 $
  */
+ 
 /************** F is for Format ***************
  * Outputs a JavaScript Date Object in various
  * customizable formats
  **********************************************
  */
-/*global window*/
+ 
 window.Date.prototype.f = function(format) {
    if(this === "" || this == "NaN") {
       return "Invalid Date";
