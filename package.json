@@ -1,0 +1,30 @@
+{
+  "name": "fisforformat",
+  "version": "1.2.0",
+  "description": "A JavaScript Library that extends JavaScript's Date object to provide all the functionality that is missing from the standard implementation. Output a date in almost any textual format and calculate the exact difference between any two dates.",
+  "main": "date.f.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faulkj/fisforformat.git"
+  },
+  "keywords": [
+    "date",
+    "format",
+    "formatter",
+    "time",
+    "datetime",
+	"compare",
+	"diff",
+	"difference",
+	"time difference"
+  ],
+  "author": "Joshua Faulkenberry <joshua@joshuafaulkenberry.com> (https://joshuafaulkenberry.com/)",
+  "license": "Kopimi",
+  "bugs": {
+    "url": "https://github.com/faulkj/fisforformat/issues"
+  },
+  "homepage": "https://github.com/faulkj/fisforformat#readme"
+}
