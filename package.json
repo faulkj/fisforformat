@@ -30,8 +30,5 @@
    "bugs": {
       "url": "https://github.com/faulkj/fisforformat/issues"
    },
-   "homepage": "https://github.com/faulkj/fisforformat#readme",
-   "dependencies": {
-      "fisforformat": "^1.2.3"
-   }
+   "homepage": "https://github.com/faulkj/fisforformat#readme"
 }
