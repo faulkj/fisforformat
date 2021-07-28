@@ -1,6 +1,6 @@
 {
    "name": "fisforformat",
-   "version": "1.2.0",
+   "version": "1.2.1",
    "description": "F is for Format!  A JavaScript Library that extends JavaScript's Date object to provide all the functionality that is missing from the standard implementation. Output a date in almost any textual format and calculate the exact difference between any two dates.",
    "main": "date.f.js",
    "scripts": {
@@ -33,6 +33,6 @@
    },
    "homepage": "https://github.com/faulkj/fisforformat#readme",
    "dependencies": {
-      "fisforformat": "^1.2.0"
+      "fisforformat": "^1.2.1"
    }
 }
