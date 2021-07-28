@@ -13,12 +13,8 @@
  */
 
 window.Date.prototype.f = function(format) {
-   if(this === "" || this == "NaN") {
-      return "Invalid Date";
-   }
-   if(format == "@") {
-      return this.getTime();
-   }
+   if(this === "" || this == "NaN") return "Invalid Date";
+   else if(format == "@") return this.getTime();
    else if(format == "REL") {
       var diff = (((new Date()).getTime() - this.getTime()) / 1000), day_diff = Math.floor(diff / 86400);
       return day_diff === 0 && (
