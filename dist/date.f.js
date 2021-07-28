@@ -1,17 +1,17 @@
 /*!
- * F is for Format, WHAT THE diff??, & Friends v1.2.1
+ * F is for Format, WHAT THE diff??, & Friends v1.2.2
  *
  * Kopimi 2021 Joshua Faulkenberry
  * Unlicensed under The Unlicense
  * http://unlicense.org/
  */
- 
+
 /************** F is for Format ***************
  * Outputs a JavaScript Date Object in various
  * customizable formats
  **********************************************
  */
- 
+
 window.Date.prototype.f = function(format) {
    if(this === "" || this == "NaN") {
       return "Invalid Date";
@@ -49,8 +49,8 @@ window.Date.prototype.f = function(format) {
       day_diff < 730 && Math.ceil( day_diff / 30 ) + " months ago" ||
       Math.ceil( day_diff / 365 ) + " years ago";
    }
-   
-   var 
+
+   var
       MONTH_NAMES=['January','February','March','April','May','June','July','August','September','October','November','December'],
       DAY_NAMES=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
       date = this,
@@ -72,7 +72,7 @@ window.Date.prototype.f = function(format) {
          return(x<0||x>9?"":"0")+x;
       },
       midnight = (new Date());
-   
+
    if(!MONTH_NAMES[M-1]) return "Invalid Date";
    format=format+"";
    midnight.setHours(0);
