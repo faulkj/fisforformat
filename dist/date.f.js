@@ -70,14 +70,15 @@ window.Date.prototype.f = function(format) {
       midnight = (new Date());
 
    if(!MONTH_NAMES[M-1]) return "Invalid Date";
+
    format=format+"";
    midnight.setHours(0);
    midnight.setMinutes(0);
    midnight.setSeconds(0);
    midnight.setMilliseconds(0);
-   if (y.length < 4) {
-      y=""+(y-0+1900);
-   }
+
+   if (y.length < 4) y = "" + (y - 0 + 1900);
+
    var value = {
       y: ""+y,
       yyyy: y,
@@ -110,14 +111,12 @@ window.Date.prototype.f = function(format) {
       n: n,
       a: (H>11) ? "PM" : "AM",
    };
-   while (i_format < format.length) {
+   while(i_format < format.length) {
       c=format.charAt(i_format);
-      token="";
-      while ((format.charAt(i_format)==c) && (i_format < format.length)) {
-         token += format.charAt(i_format++);
-      }
-      if (value[token] != null) { result=result + value[token]; }
-      else { result=result + token; }
+      token = "";
+      while((format.charAt(i_format)==c) && (i_format < format.length)) token += format.charAt(i_format++);
+      if(value[token] != null) result=result + value[token];
+      else result=result + token;
    }
    return result;
 };
@@ -125,15 +124,14 @@ window.Date.prototype.f = function(format) {
 /************ WHAT THE diff?? *************
  * Calculates the exact difference between
  * any two dates and outputs the results in
- * a customizable incremental breakdown
+ * a customizable incremental breakdown of
+ * time units
  ********************************************
  */
 window.Date.prototype.diff = function(date, options) {
    if(typeof(date) == "undefined") date = new Date();
    else if(typeof(date) ==  "string" || typeof(date) ==  "number") {
-      if((new Date(date)) != "Invalid Date" && (new Date(date)) != "NaN") {
-         date = new Date(date);
-      }
+      if((new Date(date)) != "Invalid Date" && (new Date(date)) != "NaN") date = new Date(date);
       else {
          console.log("Invalid diff comparison date: " + date);
          return false;
@@ -145,17 +143,17 @@ window.Date.prototype.diff = function(date, options) {
    }
    if(typeof(options) ==  "string") {
       options = {
-         breakdown: options
+         units: options
       };
    }
    if(!options) options = {};
    options = {
-      breakdown: options.breakdown || "TCDYMWdHmSN",
-      divider:   options.divider || ", ",
-      abbr:      options.abbr || false,
-      same:      options.same || "Same",
-      zeros:     options.zeros || false,
-      labels:    options.hasOwnProperty('labels') ? options.labels : {
+      units    : options.units || "TCDYMWdHmSN",
+      divider  : options.divider || ", ",
+      abbr     : options.abbr || false,
+      same     : options.same || "Same",
+      zeros    : options.zeros || false,
+      labels   : options.hasOwnProperty('labels') ? options.labels : {
          T : ["Millennium","Millennia","ml"],
          C : ["Century","Centuries","c"],
          D : ["Decade","Decades","d"],
@@ -187,15 +185,15 @@ window.Date.prototype.diff = function(date, options) {
        },
        result = [];
 
-   for(var i = 0; i < options.breakdown.length; i++) {
-      var res = Math.floor(diff / tl[options.breakdown.charAt(i)]);
+   for(var i = 0; i < options.units.length; i++) {
+      var res = Math.floor(diff / tl[options.units.charAt(i)]);
       if(res || options.zeros) {
-         if(options.zeros && options.breakdown.charAt(i) == "N") {
+         if(options.zeros && options.units.charAt(i) == "N") {
             if(res < 10) res = "00" + res;
             else if(res < 100) res = "0" + res;
          }
-         result.push(res + (options.labels ? " " + options.labels[options.breakdown.charAt(i)][options.abbr ? 2 : res == 1 ? 0 : 1] : ""));
-         diff = diff % tl[options.breakdown.charAt(i)];
+         result.push(res + (options.labels ? " " + options.labels[options.units.charAt(i)][options.abbr ? 2 : res == 1 ? 0 : 1] : ""));
+         diff = diff % tl[options.units.charAt(i)];
       }
    };
 
