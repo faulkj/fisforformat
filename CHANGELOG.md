@@ -1,11 +1,15 @@
-# "f" is for Format & What the diff?? Changelog
+# F is for Format & What the diff Changelog
 
-[2021-07-27] Version 1.2.1
-   - Code cleanup
-   - NPM build
+[2021-07-29] Version 2.0
+   - Overhauled format units to match PHP DateTime
+   - Added isDayLightSaving method
+   - Code cleanup and optimizations
+
+[2021-07-27] Version 1.3
+   - Code cleanup/optimizations
 
 [2021-01-28] Version 1.2
-   - Various improvements
+   - Code cleanup/optimizations
 
 [2009-07-20] Version 0.5.0
    - Various improvements

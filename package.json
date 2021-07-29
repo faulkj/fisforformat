@@ -1,8 +1,8 @@
 {
    "name": "fisforformat",
-   "version": "1.3.0",
-   "description": "F is for Format!  A JavaScript Library that extends JavaScript's Date object to provide all the functionality that is missing from the standard implementation. Output a date in almost any textual format and calculate the exact difference between any two dates.",
-   "main": "date.f.js",
+   "version": "2.0.0",
+   "description": "F is for Format!  A JavaScript Library that extends JavaScript's Date object, providing additional functionality missing from the standard implementation. Output a date in almost any format and calculate the difference between any two dates.",
+   "main": "dist/date.f.js",
    "scripts": {
       "test": "mocha"
    },
@@ -16,16 +16,14 @@
       "formatter",
       "time",
       "datetime",
-      "compare",
+      "date compare",
       "diff",
-      "difference",
-      "time difference",
       "date difference",
       "date diff",
       "date format",
       "date formatter"
    ],
-   "author": "Joshua Faulkenberry <joshua@joshuafaulkenberry.com> (https://joshuafaulkenberry.com/)",
+   "author": "Joshua Faulkenberry <j@joshuafaulkenberry.com> (https://joshuafaulkenberry.com/)",
    "license": "Kopimi",
    "bugs": {
       "url": "https://github.com/faulkj/fisforformat/issues"
