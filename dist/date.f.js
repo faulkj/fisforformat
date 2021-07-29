@@ -264,6 +264,7 @@ window.Date.prototype.when = function() {
    else if(tsSec > (new Date(new Date(now.f("m/d/Y 00:00:00")).setDate(now.getDate()-1))).getTime() / 1000) ts = "Yesterday " + this.f("g:i a");
    else if(tsSec > (new Date(new Date(now.f("m/d/Y 00:00:00")).setDate(now.getDate() - now.getDay()))).getTime() / 1000) ts = this.f("l g:i a");
    else if(tsSec > (new Date(new Date().getFullYear(), 0, 1)).getTime() / 1000) ts = this.f("F j g:i a");
+
    return ts;
 };
 
@@ -305,18 +306,14 @@ window.Date.prototype.getDaylightSavingsDays = function() {
    var day1 = new Date("03/07/"+this.getFullYear());
    var day2 = new Date("03/06/"+this.getFullYear());
    while(day1.getMonth() < 3 || (day1.getMonth() == 3  && day1.getDate() < 16)) {
-      if((day1.getTime() - day2.getTime())/1000/60/60 != 24) {
-         result[result.length] = new Date(day2.getTime());
-      }
+      if((day1.getTime() - day2.getTime()) / 1000 / 60 / 60 != 24) result[result.length] = new Date(day2.getTime());
       day1.setDate(day1.getDate()+1);
       day2.setDate(day2.getDate()+1);
    }
    day1 = new Date("10/31/"+this.getFullYear());
    day2 = new Date("10/30/"+this.getFullYear());
    while(day1.getMonth() < 11 || (day1.getMonth() == 10 && day1.getDate() < 9)) {
-      if((day1.getTime() - day2.getTime())/1000/60/60 != 24) {
-         result[result.length] = new Date(day2.getTime());
-      }
+      if((day1.getTime() - day2.getTime()) / 1000 / 60 / 60 != 24) result[result.length] = new Date(day2.getTime());
       day1.setDate(day1.getDate()+1);
       day2.setDate(day2.getDate()+1);
    }
@@ -330,6 +327,6 @@ window.Date.prototype.getDaylightSavingsDays = function() {
  */
 window.Date.prototype.isDaylightSavingsDay = function() {
    var comp = new Date(this.getTime());
-   comp.setDate(comp.getDate()+1);
+   comp.setDate(comp.getDate() + 1);
    return (comp.getTime() - this.getTime())/1000/60/60 != 24;
 };
