@@ -1,5 +1,5 @@
 {
-   "name": "fisforformat",
+   "name": "@faulkj/fisforformat",
    "version": "2.0.0",
    "description": "F is for Format!  A JavaScript Library that extends JavaScript's Date object, providing additional functionality missing from the standard implementation. Output a date in almost any format and calculate the difference between any two dates.",
    "main": "dist/date.f.js",
