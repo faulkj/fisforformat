@@ -1,10 +1,12 @@
 {
    "name": "@faulkj/fisforformat",
-   "version": "2.0.0",
-   "description": "F is for Format!  A JavaScript Library that extends JavaScript's Date object, providing additional functionality missing from the standard implementation. Output a date in almost any format and calculate the difference between any two dates.",
+   "version": "2.1.0",
+   "description": "F is for Format, WHAT THE diff, & Friends - a JavaScript Library that extends JavaScript's Date object, providing additional functionality missing from the standard implementation. Output a date in almost any format, calculate the difference between any two dates, and more!",
    "main": "dist/date.f.js",
    "scripts": {
-      "test": "mocha"
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "dev": "webpack --mode development",
+      "build": "webpack --mode production"
    },
    "repository": {
       "type": "git",
@@ -29,5 +31,12 @@
    "bugs": {
       "url": "https://github.com/faulkj/fisforformat/issues"
    },
-   "homepage": "https://github.com/faulkj/fisforformat#readme"
+   "homepage": "https://github.com/faulkj/fisforformat#readme",
+   "devDependencies": {
+      "@babel/runtime": "^7.15.4",
+      "uglify-js": "^3.14.2",
+      "webpack": "^5.59.1",
+      "webpack-cli": "^4.9.1",
+      "webpack-merge-and-include-globally": "^2.3.4"
+   }
 }

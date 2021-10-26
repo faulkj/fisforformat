@@ -150,7 +150,6 @@ window.Date.prototype.f = function(format) {
 
    value.r = value.D + ", " + value.d + " " + value.M + " " + value.H + ":" + value.i + ":" + value.s + " " + value.O;
 
-
    while(i_format < format.length) {
       c = format.charAt(i_format);
       token = "";
@@ -302,11 +301,11 @@ window.Date.prototype.isDayLightSavings = function () {
  ***********************************************
  */
 window.Date.prototype.getDaylightSavingsDays = function() {
-   var 
+   var
       result = [],
       day1 = new Date("03/07/"+this.getFullYear()),
       day2 = new Date("03/06/"+this.getFullYear());
-   
+
    while(day1.getMonth() < 3 || (day1.getMonth() == 3  && day1.getDate() < 16)) {
       if((day1.getTime() - day2.getTime()) / 1000 / 60 / 60 != 24) result[result.length] = new Date(day2.getTime());
       day1.setDate(day1.getDate()+1);
