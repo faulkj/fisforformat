@@ -1,4 +1,4 @@
-# F is for format & WHAT THE diff (& Friends!)
+# F is for Format & WHAT THE diff & Friends!
 
 A JavaScript Library that extends JavaScript's Date object to provide all the
 functionality that is missing from the standard implementation. With **F is for
