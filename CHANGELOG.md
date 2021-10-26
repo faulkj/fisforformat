@@ -1,5 +1,8 @@
 # F is for Format & What the diff Changelog
 
+[2021-10-25] Version 2.1
+   - Split into individual source files so that they may be used modularly
+
 [2021-07-29] Version 2.0
    - Overhauled format units to match PHP DateTime
    - Added isDayLightSaving method
