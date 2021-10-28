@@ -4,10 +4,10 @@
  **********************************************
  */
 
-window.Date.prototype.f = function(format) {
+window.Date.prototype.f = format => {
    if(this === "" || this == "NaN") return "Invalid Date";
-   else if(format == "@") return this.getTime();
-   else if(format == "REL") {
+   else if(format == "U") return this.getTime();
+   else if(format == "@") {
       var diff = (((new Date()).getTime() - this.getTime()) / 1000), day_diff = Math.floor(diff / 86400);
       return day_diff === 0 && (
          diff > -60 && "right now" ||
@@ -32,10 +32,10 @@ window.Date.prototype.f = function(format) {
 
       day_diff == 1 && "Yesterday" ||
       day_diff < 7 && day_diff + " days ago" ||
-      (Math.ceil( day_diff / 7 )) == 1 && "1 week ago" ||
+      (Math.ceil(day_diff / 7)) == 1 && "1 week ago" ||
       day_diff < 78 && Math.ceil( day_diff / 7 ) + " weeks ago" ||
       day_diff < 730 && Math.ceil( day_diff / 30 ) + " months ago" ||
-      Math.ceil( day_diff / 365 ) + " years ago";
+      Math.ceil(day_diff / 365) + " years ago";
    }
 
    var
@@ -57,7 +57,7 @@ window.Date.prototype.f = function(format) {
       n            = date.getMilliseconds(),
       tz           = date.toTimeString().replace(")", "").split("(")[1],
       tzO          = date.toTimeString().split(" ")[1].replace("GMT", ""),
-      LZ           = function(x, p) {
+      LZ           = (x, p) => {
                         p = p || 2;
                         return ("00" + x).slice(-p);
                      },
@@ -90,21 +90,15 @@ window.Date.prototype.f = function(format) {
       N   : E + 1,
       S   : d+(d % 10 == 1 && d != 11 ? 'st' : (d % 10 == 2 && d != 12 ? 'nd' : (d % 10 == 3 && d != 13 ? 'rd' : 'th'))),
       w   : E,
-      z   : date.diff(new Date(y, 0, 1), {
-               units :  "d",
-               labels : false
-            }),
+      z   : Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24),
 
-      W   : Math.ceil(parseInt(date.diff(new Date(y, 0, 1), {
-               units :  "d",
-               labels : false
-            })) / 7),
+      W   : Math.ceil(( date.getDay() + 1 + Math.floor((date - new Date(date.getFullYear(), 0, 1)) / (24 * 60 * 60 * 1000))) / 7),
 
       F   : MONTH_NAMES[M-1],
       m   : LZ(M),
       M   : MONTH_NAMES[M-1].substr(0, 3),
       n   : M,
-      t   : date.getDaysInMonth(),
+      t   : new Date(this.getFullYear(), this.getMonth(), 0).getDate(),
 
       L   : date.isLeapYear(),
       Y   : y,
@@ -130,14 +124,13 @@ window.Date.prototype.f = function(format) {
       vv  : LZ(n, 3),
 
       e   : tz,
-      I   : date.isDayLightSavings(),
+      I   : this.getTimezoneOffset() < Math.max((new Date(this.getFullYear(), 0, 1)).getTimezoneOffset(), (new Date(this.getFullYear(), 6, 1)).getTimezoneOffset()),
       O   : tzO,
       P   : tzO.slice(0,3) + ":" + tzO.slice(3,5),
       p   : parseInt(tzO) == 0 ? "Z" : tzO.slice(0,3) + ":" + tzO.slice(3,5),
       Z   : (parseInt(tzO.slice(0,3)) * 60 * 60) + (parseInt(tzO.slice(3,5)) * 60),
 
-      c   : date.toISOString(),
-      U   : date.getTime()
+      c   : date.toISOString()
    };
 
    value.r = value.D + ", " + value.d + " " + value.M + " " + value.H + ":" + value.i + ":" + value.s + " " + value.O;
@@ -147,7 +140,8 @@ window.Date.prototype.f = function(format) {
       token = "";
       while(format.charAt(i_format) == c && i_format < format.length) token += format.charAt(i_format++);
       if(value[token] != null) result=result + value[token];
-      else result=result + token;
+      else result = result + token;
    }
+
    return result;
 };

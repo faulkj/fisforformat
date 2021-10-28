@@ -5,14 +5,14 @@
  * time units
  ********************************************
  */
-window.Date.prototype.diff = function(date, settings) {
+window.Date.prototype.diff = (date, settings) => {
    if(typeof(date) == "undefined") date = new Date();
    else if((typeof(date) == "string" && !/\d/.test(date)) || (typeof(date) == "object" && !date.getTime)) {
       settings = date;
       date = new Date();
    }
    else if(typeof(date) == "string" || typeof(date) == "number") {
-      if((new Date(date)) != "Invalid Date" && (new Date(date)) != "NaN") date = new Date(date);
+      if((new Date(date)) != "Invalid Date" && new Date(date) != "NaN") date = new Date(date);
       else {
          console.log("Invalid diff comparison date: " + date);
          return false;
@@ -22,7 +22,8 @@ window.Date.prototype.diff = function(date, settings) {
    if(typeof(settings) == "string") settings = {
       units: settings
    };
-   if(!settings) settings = {};
+   else if(!settings) settings = {};
+
    settings = {
       abbr      : settings.abbr || false,
       divider   : settings.divider || ", ",
@@ -44,23 +45,24 @@ window.Date.prototype.diff = function(date, settings) {
       zeros     : settings.zeros || false
    };
    if(settings.units == "*") settings.units = "TCDYMWdHmSN";
-   var min   = date <= this && date || date > this && this,
-       max   = date > this && date || date <= this && this,
-       diff  = (max.getTime() - min.getTime()),
-       tl    = {
-          T : 1000*60*60*24*365*100*10,
-          C : 1000*60*60*24*365*100,
-          D : 1000*60*60*24*365*10,
-          Y : 1000*60*60*24*365,
-          M : 1000*60*60*24*30,
-          W : 1000*60*60*24*7,
-          d : 1000*60*60*24,
-          H : 1000*60*60,
-          m : 1000*60,
-          S : 1000,
-          N : 1
-       },
-       result = [];
+   var
+      min    = date <= this && date || date > this && this,
+      max    = date > this && date || date <= this && this,
+      diff   = (max.getTime() - min.getTime()),
+      tl     = {
+                  T : 1000*60*60*24*365*100*10,
+                  C : 1000*60*60*24*365*100,
+                  D : 1000*60*60*24*365*10,
+                  Y : 1000*60*60*24*365,
+                  M : 1000*60*60*24*30,
+                  W : 1000*60*60*24*7,
+                  d : 1000*60*60*24,
+                  H : 1000*60*60,
+                  m : 1000*60,
+                  S : 1000,
+                  N : 1
+               },
+      result = [];
 
    for(var i = 0; i < settings.units.length; i++) {
       var res = Math.floor(diff / tl[settings.units.charAt(i)]);

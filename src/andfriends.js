@@ -1,20 +1,22 @@
-/*************** Date.when() ****************
+/*************** Date.happened() ****************
  * Returns a historical timestamp indicating
  * how long ago the provided date was, like
  * the timestamps on social media posts
  ********************************************
  */
-window.Date.prototype.when = function() {
+window.Date.prototype.happened = () => {
+   if(!Date.prototype.f || !Date.prototype.diff) return "Date.happened requires Date.f and Date.diff!";
    var
       now       = new Date(),
       ts        = this.f("F j, Y g:i a"),
       nowSec    = now.getTime() / 1000,
       tsSec     = this.getTime() / 1000;
 
-   if((nowSec - tsSec) < 60) ts = "Now";
+   if((nowSec - tsSec) < 20) ts = "Now";
+   else if((nowSec - tsSec) < 60) ts = this.diff(now, "s");
    else if((nowSec - tsSec) / 60 < 60) ts = this.diff(now, "m");
    else if(((nowSec - tsSec) / 60) / 60 < 12) ts = this.diff(now, "H");
-   else if(now.f("Ymd") == this.f("Ymd")) ts = "Today" + this.f("g:i a");
+   else if(now.f("Ymd") == this.f("Ymd")) ts = "Today " + this.f("g:i a");
    else if(tsSec > (new Date(new Date(now.f("m/d/Y 00:00:00")).setDate(now.getDate()-1))).getTime() / 1000) ts = "Yesterday " + this.f("g:i a");
    else if(tsSec > (new Date(new Date(now.f("m/d/Y 00:00:00")).setDate(now.getDate() - now.getDay()))).getTime() / 1000) ts = this.f("l g:i a");
    else if(tsSec > (new Date(new Date().getFullYear(), 0, 1)).getTime() / 1000) ts = this.f("F j g:i a");
@@ -27,7 +29,7 @@ window.Date.prototype.when = function() {
  * month
  *********************************************
  */
-window.Date.prototype.getDaysInMonth = function() {
+window.Date.prototype.getDaysInMonth = () => {
    return new Date(this.getFullYear(), this.getMonth(), 0).getDate();
 };
 
@@ -36,8 +38,8 @@ window.Date.prototype.getDaysInMonth = function() {
  * year
  ***********************************************
  */
-window.Date.prototype.isLeapYear = function() {
-   return (new Date(this.getFullYear(),1,29)).getDate() == 29;
+window.Date.prototype.isLeapYear = () => {
+   return (new Date(this.getFullYear(), 1, 29)).getDate() == 29;
 };
 
 /******** Date.isDayLightSavings() *************
@@ -45,8 +47,8 @@ window.Date.prototype.isLeapYear = function() {
  * in effect
  ***********************************************
  */
-window.Date.prototype.isDayLightSavings = function () {
-   return this.getTimezoneOffset() < Math.max(( new Date(this.getFullYear(), 0, 1)).getTimezoneOffset(), (new Date(this.getFullYear(), 6, 1)).getTimezoneOffset());
+window.Date.prototype.isDayLightSavings = () => {
+   return this.getTimezoneOffset() < Math.max((new Date(this.getFullYear(), 0, 1)).getTimezoneOffset(), (new Date(this.getFullYear(), 6, 1)).getTimezoneOffset());
 }
 
 /******* Date.getDaylightSavingsDays() *********
@@ -55,7 +57,7 @@ window.Date.prototype.isDayLightSavings = function () {
  * the current year
  ***********************************************
  */
-window.Date.prototype.getDaylightSavingsDays = function() {
+window.Date.prototype.getDaylightSavingsDays = () => {
    var
       result = [],
       day1 = new Date("03/07/"+this.getFullYear()),
@@ -81,7 +83,7 @@ window.Date.prototype.getDaylightSavingsDays = function() {
  * daylight savings change day
  ***********************************************
  */
-window.Date.prototype.isDaylightSavingsDay = function() {
+window.Date.prototype.isDaylightSavingsDay = () => {
    var c = new Date(this.getTime());
    c.setDate(c.getDate() + 1);
    return (c.getTime() - this.getTime())/1000/60/60 != 24;

@@ -60,15 +60,16 @@ The following characters are recognized in the format parameter string:
 |v|Milliseconds|Example: 654|
 |Timezone|---|---|
 |e|Timezone identifier|Examples: Pacific Daylight Time, Pacific Standard Time|
-|I (capital i)|Whether or not the date is in daylight saving time|1 if Daylight Saving Time, 0 otherwise.|
+|I (capital i)|Whether or not the date is in daylight saving time|true if Daylight Saving Time, false otherwise.|
 |O|Difference to Greenwich time (GMT) without colon between hours and minutes|Example: +0200|
 |P|Difference to Greenwich time (GMT) with colon between hours and minutes|Example: +02:00|
 |p|The same as P, but returns Z instead of +00:00|Example: +02:00|
 |Z|Timezone offset in seconds. The offset for timezones west of UTC is always negative, and for those east of UTC is always positive.|-43200 through 50400|
 |Full Date/Time|---|---|
 |c|ISO 8601 date|2004-02-12T15:19:21+00:00|
-|r|» RFC 2822 formatted date|Example: Thu, 21 Dec 2000 16:01:07 +0200|
+|r|RFC 2822 formatted date|Example: Thu, 21 Dec 2000 16:01:07 +0200|
 |U|Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT)|1627616755444|
+|@|String representation of the relative time between the Date and the current time|Yesterday / Tomorrow / 5 minutes ago / 7 months from now|
 
 Example:
 ```javascript
@@ -162,7 +163,7 @@ Example:
 ```javascript
 var thisYear = new Date();
 alert(
-   "On " + thisYear.getDaylightSavingsDays[0].f("DD, MMM d") + " spring forward.\n" 
+   "On " + thisYear.getDaylightSavingsDays[0].f("DD, MMM d") + " spring forward.\n"
    + "On " + thisYear.getDaylightSavingsDays[1].f("DD, MMM d") + " fall back."
 );
 ```
@@ -209,17 +210,17 @@ Example:
 var thisYear = new Date();
 if(thisYear.isLeapYear()) alert("It's a leap year!");
 else {
-   alert("Maybe next year..."); 
-   thisYear.setYear(+1); 
-   if(thisYear.isLeapYear()) alert("Yes!!");                                                   
-   else alert("Darn.");                           
+   alert("Maybe next year...");
+   thisYear.setYear(+1);
+   if(thisYear.isLeapYear()) alert("Yes!!");
+   else alert("Darn.");
 }
 ```
 
 ### Date.when()
 
  Returns a historical timestamp indicating how long ago the provided date was, like the timestamps on social media posts  (Note: Future dates will be labeled "Now")
- 
+
  Example:
  ```javascript
 var now = new Date();
