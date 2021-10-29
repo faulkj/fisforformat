@@ -5,7 +5,7 @@
  * time units
  ********************************************
  */
-window.Date.prototype.diff = (date, settings) => {
+window.Date.prototype.diff = function(date, settings) {
    if(typeof(date) == "undefined") date = new Date();
    else if((typeof(date) == "string" && !/\d/.test(date)) || (typeof(date) == "object" && !date.getTime)) {
       settings = date;
@@ -79,6 +79,7 @@ window.Date.prototype.diff = (date, settings) => {
    diff = result.join(settings.divider);
    if(diff === "") diff = settings.same;
    if(settings.lc) diff = diff.toLowerCase();
+   if(parseInt(diff) + "" === diff) diff = parseInt(diff);
 
    return diff;
 };

@@ -1,5 +1,12 @@
 # F is for Format & What the diff Changelog
 
+[2021-10-29] Version 2.3
+   - Removed bad arrow functions
+   - Fixed standalone leap year logic in Date.f
+
+[2021-10-28] Version 2.2
+   - Code cleanup/optimizations
+
 [2021-10-25] Version 2.1
    - Split into individual source files so that they may be used modularly
 

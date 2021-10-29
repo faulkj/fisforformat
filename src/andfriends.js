@@ -4,7 +4,7 @@
  * the timestamps on social media posts
  ********************************************
  */
-window.Date.prototype.happened = () => {
+window.Date.prototype.happened = function() {
    if(!Date.prototype.f || !Date.prototype.diff) return "Date.happened requires Date.f and Date.diff!";
    var
       now       = new Date(),
@@ -29,7 +29,7 @@ window.Date.prototype.happened = () => {
  * month
  *********************************************
  */
-window.Date.prototype.getDaysInMonth = () => {
+window.Date.prototype.getDaysInMonth = function() {
    return new Date(this.getFullYear(), this.getMonth(), 0).getDate();
 };
 
@@ -38,7 +38,7 @@ window.Date.prototype.getDaysInMonth = () => {
  * year
  ***********************************************
  */
-window.Date.prototype.isLeapYear = () => {
+window.Date.prototype.isLeapYear = function() {
    return (new Date(this.getFullYear(), 1, 29)).getDate() == 29;
 };
 
@@ -47,7 +47,7 @@ window.Date.prototype.isLeapYear = () => {
  * in effect
  ***********************************************
  */
-window.Date.prototype.isDayLightSavings = () => {
+window.Date.prototype.isDayLightSavings = function() {
    return this.getTimezoneOffset() < Math.max((new Date(this.getFullYear(), 0, 1)).getTimezoneOffset(), (new Date(this.getFullYear(), 6, 1)).getTimezoneOffset());
 }
 
@@ -57,7 +57,7 @@ window.Date.prototype.isDayLightSavings = () => {
  * the current year
  ***********************************************
  */
-window.Date.prototype.getDaylightSavingsDays = () => {
+window.Date.prototype.getDaylightSavingsDays = function() {
    var
       result = [],
       day1 = new Date("03/07/"+this.getFullYear()),
@@ -83,7 +83,7 @@ window.Date.prototype.getDaylightSavingsDays = () => {
  * daylight savings change day
  ***********************************************
  */
-window.Date.prototype.isDaylightSavingsDay = () => {
+window.Date.prototype.isDaylightSavingsDay = function() {
    var c = new Date(this.getTime());
    c.setDate(c.getDate() + 1);
    return (c.getTime() - this.getTime())/1000/60/60 != 24;

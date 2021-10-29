@@ -4,7 +4,7 @@
  **********************************************
  */
 
-window.Date.prototype.f = format => {
+window.Date.prototype.f = function(format) {
    if(this === "" || this == "NaN") return "Invalid Date";
    else if(format == "U") return this.getTime();
    else if(format == "@") {
@@ -100,7 +100,7 @@ window.Date.prototype.f = format => {
       n   : M,
       t   : new Date(this.getFullYear(), this.getMonth(), 0).getDate(),
 
-      L   : date.isLeapYear(),
+      L   : (new Date(this.getFullYear(), 1, 29)).getDate() == 29,
       Y   : y,
       y   : (y + "").substr(2, 4),
 
