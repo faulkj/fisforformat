@@ -1,7 +1,7 @@
-# F is for Format & WHAT THE diff & Friends!
+# f is for Format & WHAT THE diff & Friends!
 
 A JavaScript Library that extends JavaScript's Date object to provide all the
-functionality that is missing from the standard implementation. With **F is for
+functionality that is missing from the standard implementation. With **f is for
 Format** you can easily output a date in almost any format. **WHAT THE diff**
 gives you the ability to calculate the exact difference between *any* two dates
 and output the difference in human readable text. Also included are several
@@ -9,7 +9,7 @@ other useful Date methods including **Date.isLeapYear** and
 **Date.getDaysInMonth**.
 
 
-## F is for Format
+## f is for Format
 
 ### Date.f(format)
 
