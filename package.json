@@ -33,9 +33,7 @@
    },
    "homepage": "https://github.com/faulkj/fisforformat#readme",
    "devDependencies": {
-      "@babel/core": "^7.15.8",
-      "@babel/preset-env": "^7.15.8",
-      "babel-preset-minify": "^0.5.1",
+      "uglify-js": "^3.15.5",
       "webpack": "^5.59.1",
       "webpack-cli": "^4.9.1",
       "webpack-concat-files-plugin": "^0.5.2"
