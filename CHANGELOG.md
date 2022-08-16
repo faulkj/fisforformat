@@ -1,6 +1,6 @@
 # F is for Format & What the diff Changelog
 
-[2022-08-16] Version 2.3.1
+[2022-08-16] Version 2.3.2
    - Fix for legacy browsers
    
 [2021-10-29] Version 2.3
