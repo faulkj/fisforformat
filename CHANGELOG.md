@@ -1,5 +1,8 @@
 # F is for Format & What the diff Changelog
 
+[2022-08-16] Version 2.3.1
+   - Fix for legacy browsers
+   
 [2021-10-29] Version 2.3
    - Removed bad arrow functions
    - Fixed standalone leap year logic in Date.f

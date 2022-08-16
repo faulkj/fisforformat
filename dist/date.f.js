@@ -65,7 +65,7 @@ window.Date.prototype.f = function(format) {
       n            = date.getMilliseconds(),
       tz           = date.toTimeString().replace(")", "").split("(")[1],
       tzO          = date.toTimeString().split(" ")[1].replace("GMT", ""),
-      LZ           = (x, p) => {
+      LZ           = function(x, p) {
                         p = p || 2;
                         return ("00" + x).slice(-p);
                      },
